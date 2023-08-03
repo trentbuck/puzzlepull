@@ -90,6 +90,8 @@ def get_clues(data):
 def get_guardian_puzzle(URL, filepath=None, download=True):
 
     resp = _sess.get(URL)
+    if resp.status_code == 404:
+        return False            # cheap hack
     resp.raise_for_status()
 
     js_crossword, = lxml.html.fromstring(resp.text).xpath('//@data-crossword-data')
