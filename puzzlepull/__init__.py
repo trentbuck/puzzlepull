@@ -90,6 +90,7 @@ def get_clues(data):
 def get_guardian_puzzle(URL, filepath=None, download=True):
 
     page = _sess.get(URL)
+    page.raise_for_status()
 
     soup = BeautifulSoup(page.content, "html.parser")
 
