@@ -5,8 +5,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-
-
 # make a blank puzzle
 def make_blank_puzzle(width, height):
     puzzle = []
@@ -28,7 +26,7 @@ def get_solution(width, height, data):
         length = clue["length"]
         solution = clue["solution"]
         if clue["direction"] == "across":
-            blank_puzzle[y][x : x + length] = list(solution)
+            blank_puzzle[y][x:x + length] = list(solution)
         elif clue["direction"] == "down":
             for index, row in enumerate(range(y, y + length)):
                 blank_puzzle[row][x] = solution[index]
@@ -46,18 +44,16 @@ def get_layout(width, height, data):
         x = clue["position"]["x"]
         y = clue["position"]["y"]
         length = clue["length"]
-        solution = clue["solution"]
         number = clue["number"]
         blank_puzzle[y][x] = number
         if clue["direction"] == "across":
-            blank_puzzle[y][x + 1 : x + length] = [0] * (length - 1)
+            blank_puzzle[y][x + 1:x + length] = [0] * (length - 1)
 
     # down next
     for clue in data["entries"]:
         x = clue["position"]["x"]
         y = clue["position"]["y"]
         length = clue["length"]
-        solution = clue["solution"]
         number = clue["number"]
         blank_puzzle[y][x] = number
         if clue["direction"] == "down":

@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, Response
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def home():
     """Display homepage"""
@@ -32,11 +33,7 @@ def guardian_puzzle():
         return Response(
             json.dumps(puzzle),
             mimetype="application/json",
-            headers={
-                "Content-Disposition": f"attachment;filename={puzzle['annotation']}"
-            },
-        )
+            headers={"Content-Disposition":
+                     f"attachment;filename={puzzle['annotation']}"})
     else:
         return jsonify(puzzle), 200
-
-
