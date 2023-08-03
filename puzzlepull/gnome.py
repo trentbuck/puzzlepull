@@ -15,7 +15,7 @@ sqlite3.register_adapter(dict, json.dumps)
 with sqlite3.connect('cache.db', detect_types=sqlite3.PARSE_DECLTYPES) as conn:
     conn.execute('PRAGMA journal_mode = wal')
     conn.execute('CREATE TABLE IF NOT EXISTS quick(id INTEGER PRIMARY KEY, puzzle JSON NOT NULL)')
-    for i in range(100, 100000, 1000):
+    for i in range(8000, 17000):
         if bool(conn.execute('SELECT 1 FROM quick WHERE id = :id', {'id': i}).fetchall()):
             logging.debug('Already downloaded %s, so skipping', i)
             continue

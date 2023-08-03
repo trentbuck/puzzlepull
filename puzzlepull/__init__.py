@@ -92,6 +92,8 @@ def get_guardian_puzzle(URL, filepath=None, download=True):
     resp = _sess.get(URL)
     if resp.status_code == 404:
         return False            # cheap hack
+    if resp.status_code == 301 and resp.headers['location'] == 'https://www.theguardian.com/crosswords/':
+        return False            # seen for https://www.theguardian.com/crosswords/quick/9245
     resp.raise_for_status()
 
     js_crossword, = lxml.html.fromstring(resp.text).xpath('//@data-crossword-data')
