@@ -1,8 +1,8 @@
-import json
 import datetime
-import httpx
+import json
 
-from bs4 import BeautifulSoup
+import httpx
+import lxml.html
 
 
 # Create a session, so HTTP/2 connection pooling works.
@@ -89,13 +89,11 @@ def get_clues(data):
 
 def get_guardian_puzzle(URL, filepath=None, download=True):
 
-    page = _sess.get(URL)
-    page.raise_for_status()
+    resp = _sess.get(URL)
+    resp.raise_for_status()
 
-    soup = BeautifulSoup(page.content, "html.parser")
-
-    js_crossword = soup.find("div", class_="js-crossword")
-    data = json.loads(js_crossword.get_attribute_list("data-crossword-data")[0])
+    js_crossword, = lxml.html.fromstring(resp.text).xpath('//@data-crossword-data')
+    data = json.loads(js_crossword)
 
     # get the datetime
     dt = datetime.datetime.fromtimestamp(data["date"] / 1000)
