@@ -1,8 +1,13 @@
 import json
 import datetime
-import requests
+import httpx
 
 from bs4 import BeautifulSoup
+
+
+# Create a session, so HTTP/2 connection pooling works.
+# This dramatically reduces the overhead on the server.
+_sess = httpx.Client(http2=True)
 
 
 # make a blank puzzle
@@ -84,7 +89,7 @@ def get_clues(data):
 
 def get_guardian_puzzle(URL, filepath=None, download=True):
 
-    page = requests.get(URL)
+    page = _sess.get(URL)
 
     soup = BeautifulSoup(page.content, "html.parser")
 

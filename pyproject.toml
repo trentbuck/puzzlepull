@@ -6,7 +6,7 @@ authors = ["Jarred Green <astrojarred@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-requests = "^2.25.1"
+httpx = "^0.23"
 beautifulsoup4 = "^4.9.3"
 ipuz = "^0.1.4"
 ipykernel = "^5.4.2"
