@@ -19,12 +19,14 @@ with sqlite3.connect('cache.db', detect_types=sqlite3.PARSE_DECLTYPES) as conn:
         if bool(conn.execute('SELECT 1 FROM quick WHERE id = :id', {'id': i}).fetchall()):
             logging.debug('Already downloaded %s, so skipping', i)
             continue
-        conn.execute('INSERT INTO quick(id, puzzle) VALUES (:id, :puzzle)',
-                     {'id': i,
-                      'puzzle': puzzlepull.get_guardian_puzzle(
-                          f'https://www.theguardian.com/crosswords/quick/{i}',
-                          download=False)})
-        conn.commit()
+        url = f'https://www.theguardian.com/crosswords/quick/{i}'
+        try:
+            conn.execute('INSERT INTO quick(id, puzzle) VALUES (:id, :puzzle)',
+                         {'id': i,
+                          'puzzle': puzzlepull.get_guardian_puzzle(url, download=False)})
+            conn.commit()
+        except IndexError:
+            logging.warning('Conversion problem for %s, skipping it', url)
 
 
 # Assemble them into "The Guardian - Quick - 2002" collections.
@@ -64,7 +66,7 @@ for year in range(1990, 2030):
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<gresources>',
             '<gresource prefix="/org/gnome/Crosswords/puzzle-set/">',
-            f'<file>{internal_manifest_path}</file>',
+            f'<file>{internal_manifest_path.relative_to(td)}</file>',
             *(f"<file>{path.relative_to(td)}</file>"
               for path in puzzle_paths),
             '</gresource>',
