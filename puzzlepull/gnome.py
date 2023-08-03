@@ -59,7 +59,7 @@ for year in range(1990, 2030):
              f'Header=Guardian Quick {year}',
              'ShowProgress=true',
              *(f"[Puzzle{i}]\nPuzzleName={path.relative_to(root)}"
-               for path in puzzle_paths)]))
+               for i, path in enumerate(puzzle_paths))]))
         external_manifest_path.write_text('\n'.join([
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<gresources>',
