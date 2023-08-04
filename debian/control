@@ -1,0 +1,18 @@
+Source: puzzlepull
+Section: games
+Priority: optional
+Homepage: https://github.com/trentbuck/puzzlepull
+Standards-Version: 4.6.2
+Maintainer: Trent W. Buck <twb@cyber.com.au>
+Rules-Requires-Root: no
+Build-Depends: debhelper-compat (= 13),
+# FIXME
+
+Package: gnome-crosswords-addons-theguardian
+Enhances: gnome-crosswords
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Architecture: all
+Description: crossword puzzles from The Guardian newspaper
+ GNOME Crosswords is a crossword player and editor.
+ This package provides offline access to The Guardian's old crossword puzzles.
+ If they do not appear immediately click "Add More Puzzles" in GNOME Crosswords.
